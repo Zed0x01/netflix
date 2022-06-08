@@ -91,7 +91,7 @@ function Login() {
         >
           Sign In
         </button>
-        <div className="text-[gray]">
+        <div className="text-[gray] hidden">
           New to Netflix?{" "}
           <button
             className="cursor-pointer text-white hover:underline"
