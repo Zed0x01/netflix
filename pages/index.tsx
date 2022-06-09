@@ -4,10 +4,14 @@ import styles from "../styles/Home.module.css";
 import useAuth from "../hooks/useAuth";
 import Header from "../components/Header";
 import Banner from "../components/Banner";
+import Modal from "../components/Modal";
 import axios from "axios";
 import requests from "../utils/requests";
 import { Movie } from "../typings";
 import Row from "../components/Row";
+import { useRecoilValue } from "recoil";
+import { useState } from "react";
+import { modalState } from "../atoms/modalAtom";
 
 interface Props {
   netflixOrigin: Movie[];
@@ -30,6 +34,9 @@ const Home = ({
   romanceMovies,
   Doumentaries,
 }: Props) => {
+  const { loading } = useAuth();
+  const showModal = useRecoilValue(modalState);
+  // const [showModal,setShowModal]=useState();
   return (
     <div
       className={
@@ -55,6 +62,7 @@ const Home = ({
           <Row title={"Documentaries"} Movies={Doumentaries} />
         </section>
       </main>
+      {showModal && <Modal />}
     </div>
   );
 };

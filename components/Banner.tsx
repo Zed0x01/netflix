@@ -3,6 +3,8 @@ import { Movie } from "../typings";
 import { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { IoMdInformationCircle } from "react-icons/io";
+import { useRecoilState } from "recoil";
+import { modalState, movieState } from "../atoms/modalAtom";
 
 interface Props {
   netflixOrigin: Movie[];
@@ -10,6 +12,8 @@ interface Props {
 const baseUrl = "https://image.tmdb.org/t/p/original/";
 const Banner = ({ netflixOrigin }: Props) => {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [showModal, setShowModal] = useRecoilState(modalState);
+  const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   useEffect(() => {
     setMovie(netflixOrigin[Math.floor(Math.random() * netflixOrigin.length)]);
   }, [netflixOrigin]);
@@ -36,7 +40,13 @@ const Banner = ({ netflixOrigin }: Props) => {
         <button className={"bannerButton bg-white text-black"}>
           <FaPlay className={"h-4 w-4 text-black md:w-6 md:h-6"} /> Play
         </button>
-        <button className={"bannerButton bg-[gray]/70"}>
+        <button
+          className={"bannerButton bg-[gray]/70"}
+          onClick={() => {
+            setCurrentMovie(movie);
+            setShowModal(true);
+          }}
+        >
           <IoMdInformationCircle className={"h-5 w-5 md:h-8 md:w-8"} /> More
           Info
         </button>
